@@ -13,6 +13,13 @@ Marionette MCP enables AI agents (Claude Code, Copilot, Cursor, Gemini CLI, and 
 
 Marionette MCP keeps the surface area intentionally small. It exposes only a handful of high-signal actions and returns the minimum actionable data, which helps keep prompts focused and context sizes under control.
 
+## Learn more about Marionette MCP:
+
+- Video: [Clicking Through Your App with Marionette MCP](https://youtu.be/JYsFDbKTJ54)
+- Article: [Marionette MCP - Your Flutter AI Agent That Interacts With Running Apps](https://leancode.co/blog/marionette-mcp-in-flutter-apps?utm_source=github.com&utm_medium=referral&utm_campaign=marionette-readme)
+
+## Demo
+
 ![](https://github.com/leancodepl/marionette_mcp_attachments/blob/master/promo.gif)
 
 ## Marionette MCP vs Flutter MCP
