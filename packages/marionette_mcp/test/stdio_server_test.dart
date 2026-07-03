@@ -44,7 +44,10 @@ void main() {
           'params': {
             'protocolVersion': '2025-06-18',
             'capabilities': {
-              'tasks': {'list': <String, dynamic>{}, 'cancel': <String, dynamic>{}},
+              'tasks': {
+                'list': <String, dynamic>{},
+                'cancel': <String, dynamic>{}
+              },
             },
             'clientInfo': {'name': 'copilot', 'version': '1.0.0'},
           },
