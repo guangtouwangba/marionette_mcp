@@ -15,7 +15,7 @@ Once your agent is connected (see [Configuring your AI tool](#configuring-your-a
 
 | Tool | Description |
 | --- | --- |
-| `get_interactive_elements` | List the interactive elements currently visible — each with its type, text, key, and identifying properties. The agent's primary way to "see" the screen. |
+| `get_interactive_elements` | List the interactive elements currently visible — each with its type, text, key, identifier (Semantics identifier), and other identifying properties. The agent's primary way to "see" the screen. |
 | `take_screenshots` | Capture screenshots of all active views, returned as base64 PNGs. |
 | `get_logs` | Retrieve app logs collected since start or the last hot reload. Requires a [`LogCollector`](./logging.md). |
 
@@ -24,11 +24,11 @@ Once your agent is connected (see [Configuring your AI tool](#configuring-your-a
 | Tool | Description |
 | --- | --- |
 | `tap` | Tap an element matched by `key`, `identifier`, `text`, `type`, or `coordinates`. Prefer `key`; `identifier` (Semantics identifier) is the next-best stable selector. Tapping a text field focuses it. |
-| `secondary_tap` | Right mouse button click on a matching element (**desktop only**); triggers `onSecondaryTap`, e.g. context menus. |
-| `double_tap` | Double tap an element (optional `delay` between taps, default 100 ms). |
-| `long_press` | Long press an element (optional `duration`, default 600 ms) — context menus, reorderable lists. |
+| `secondary_tap` | Right mouse button click on a matching element (**desktop only**); triggers `onSecondaryTap`, e.g. context menus. Match by `key`, `identifier`, `text`, `type`, or `coordinates`. |
+| `double_tap` | Double tap an element matched by `key`, `identifier`, `text`, `type`, or `coordinates` (optional `delay` between taps, default 100 ms). |
+| `long_press` | Long press an element matched by `key`, `identifier`, `text`, `type`, or `coordinates` (optional `duration`, default 600 ms) — context menus, reorderable lists. |
 | `swipe` | Swipe/drag. Element-based (`key`/`identifier`/`text` + `direction` + optional `distance`) or coordinate-based (`startX/Y`, `endX/Y`). For `PageView`, `Dismissible`, `Drawer`, sliders. |
-| `pinch_zoom` | Pinch to zoom an element. `scale > 1.0` zooms in, `< 1.0` zooms out. For maps, images, PDFs. |
+| `pinch_zoom` | Pinch to zoom an element matched by `key`, `identifier`, `text`, `type`, or `coordinates`. `scale > 1.0` zooms in, `< 1.0` zooms out. For maps, images, PDFs. |
 | `press_back_button` | Simulate the system back button (Android back / iOS swipe-back). Works with Navigator, GoRouter, etc. |
 | `scroll_to` | Scroll until an element matching `key`, `identifier`, or `text` becomes visible. |
 

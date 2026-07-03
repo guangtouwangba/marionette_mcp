@@ -83,11 +83,11 @@ Global options: `-i, --instance <name>`, `--uri <ws://...>`, `--timeout <seconds
 | --- | --- |
 | `get-interactive-elements` | List interactive UI elements. |
 | `tap` | Tap an element (`--key`, `--identifier`, `--text`, `--type`, or `--x`/`--y`). |
-| `secondary-tap` | Right-click a matching element (desktop only). |
-| `double-tap` | Double tap (matchers + `--delay`). |
-| `long-press` | Long press (matchers + `--duration`). |
-| `pinch-zoom` | Pinch zoom (matchers + `--scale`, `--start-distance`). |
-| `swipe` | Swipe/drag (matchers + `--direction`, `--distance`, or `--start-x`/`--start-y`/`--end-x`/`--end-y`). |
+| `secondary-tap` | Right-click a matching element (desktop only) (`--key`, `--identifier`, `--text`, `--type`, or `--x`/`--y`). |
+| `double-tap` | Double tap (`--key`, `--identifier`, `--text`, `--type`, or `--x`/`--y`, plus `--delay`). |
+| `long-press` | Long press (`--key`, `--identifier`, `--text`, `--type`, or `--x`/`--y`, plus `--duration`). |
+| `pinch-zoom` | Pinch zoom (`--key`, `--identifier`, `--text`, `--type`, or `--x`/`--y`, plus `--scale`, `--start-distance`). |
+| `swipe` | Swipe/drag (`--key`/`--identifier`/`--text` + `--direction`, `--distance`, or `--start-x`/`--start-y`/`--end-x`/`--end-y`). |
 | `enter-text` | Enter text (`--key`, `--identifier`, `--text`, or `--focused`, plus `--input`). |
 | `press-key` | Press a key on the focused element (`--key`, optional `--modifiers`). Real key event: enter to submit, tab to move focus, escape, arrows/backspace to edit, or `--modifiers control` for shortcuts. |
 | `scroll-to` | Scroll to an element (`--key`, `--identifier`, or `--text`). |
