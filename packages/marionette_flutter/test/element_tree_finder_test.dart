@@ -170,8 +170,7 @@ void main() {
       final elements = _finder.findInteractiveElements();
       expect(
         elements.any(
-          (e) =>
-              e['type'] == 'Semantics' && e['identifier'] == 'submit_button',
+          (e) => e['type'] == 'Semantics' && e['identifier'] == 'submit_button',
         ),
         isTrue,
         reason: 'An identifier-only Semantics wrapper must appear in '

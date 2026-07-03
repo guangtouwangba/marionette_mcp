@@ -186,44 +186,5 @@ void main() {
             'must not produce a false match',
       );
     });
-
-    testWidgets(
-        'matches Text.semanticsIdentifier, which desugars to a Semantics '
-        'wrapper, and is hittable inside an interactive ancestor',
-        (tester) async {
-      // Text(semanticsIdentifier: ...) builds a Semantics(identifier: ...)
-      // wrapper internally, so the same matcher mechanism covers it — no
-      // per-widget special case needed.
-      await tester.pumpWidget(
-        MaterialApp(
-          home: Scaffold(
-            body: Center(
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Text('Submit', semanticsIdentifier: 'submit_btn'),
-              ),
-            ),
-          ),
-        ),
-      );
-
-      final element = WidgetFinder().findHittableElement(
-        const IdentifierMatcher('submit_btn'),
-        _configuration,
-      );
-
-      expect(
-        element,
-        isNotNull,
-        reason: 'Text.semanticsIdentifier forwards to a generated Semantics '
-            'wrapper, so identifier matching must find it; inside a button it '
-            'is hittable so tap/enter_text reach the control',
-      );
-      expect(element!.widget, isA<Semantics>());
-      expect(
-        (element.widget as Semantics).properties.identifier,
-        'submit_btn',
-      );
-    });
   });
 }

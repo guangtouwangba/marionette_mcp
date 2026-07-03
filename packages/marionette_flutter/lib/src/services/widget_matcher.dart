@@ -143,9 +143,9 @@ class IdentifierMatcher extends WidgetMatcher {
 
   @override
   bool matches(Element element, MarionetteConfiguration configuration) {
-   if (identifierValue.isEmpty) {
+    if (identifierValue.isEmpty) {
       return false;
-   }
+    }
 
     if (element.widget case Semantics(:final properties)) {
       return properties.identifier == identifierValue;
