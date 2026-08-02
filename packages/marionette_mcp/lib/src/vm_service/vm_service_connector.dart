@@ -22,6 +22,19 @@ class VmServiceExtensionException implements Exception {
     this.stackTrace,
   });
 
+  /// Creates an exception that preserves the application-side VM extension
+  /// details when they are available.
+  factory VmServiceExtensionException.fromRpcError(
+    String extensionName,
+    RPCError rpcError,
+  ) {
+    return VmServiceExtensionException(
+      'Extension $extensionName failed',
+      errorCode: rpcError.code,
+      error: rpcError.details ?? rpcError.message,
+    );
+  }
+
   final String message;
   final int? errorCode;
   final String? error;
@@ -211,11 +224,7 @@ class VmServiceConnector {
       return responseJson;
     } on RPCError catch (e) {
       _logger.severe('Error calling extension $extensionName', e);
-      throw VmServiceExtensionException(
-        'Extension $extensionName failed',
-        errorCode: e.code,
-        error: e.message,
-      );
+      throw VmServiceExtensionException.fromRpcError(extensionName, e);
     } catch (err) {
       _logger.severe('Error calling extension $extensionName', err);
       rethrow;
