@@ -29,6 +29,24 @@ void main() {
 
       expect(exception.error, 'Server error');
     });
+
+    test('stringifies structured application-side details', () {
+      final exception = VmServiceExtensionException.fromRpcError(
+        'custom.failure',
+        RPCError.withDetails(
+          'ext.flutter.custom.failure',
+          -32000,
+          'Server error',
+          details: <String, Object?>{
+            'reason': 'callback failed',
+            'retryable': false,
+          },
+        ),
+      );
+
+      expect(exception.error, contains('callback failed'));
+      expect(exception.error, contains('retryable: false'));
+    });
   });
 
   group('VmServiceConnector.callCustomExtension', () {

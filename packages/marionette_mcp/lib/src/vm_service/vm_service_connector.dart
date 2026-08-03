@@ -28,10 +28,11 @@ class VmServiceExtensionException implements Exception {
     String extensionName,
     RPCError rpcError,
   ) {
+    final details = rpcError.data?['details'];
     return VmServiceExtensionException(
       'Extension $extensionName failed',
       errorCode: rpcError.code,
-      error: rpcError.details ?? rpcError.message,
+      error: details?.toString() ?? rpcError.message,
     );
   }
 
@@ -222,8 +223,8 @@ class VmServiceConnector {
       _logger.finest('Extension response: $responseJson');
 
       return responseJson;
-    } on RPCError catch (e) {
-      _logger.severe('Error calling extension $extensionName', e);
+    } on RPCError catch (e, stackTrace) {
+      _logger.severe('Error calling extension $extensionName', e, stackTrace);
       throw VmServiceExtensionException.fromRpcError(extensionName, e);
     } catch (err) {
       _logger.severe('Error calling extension $extensionName', err);
