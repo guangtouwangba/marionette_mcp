@@ -30,6 +30,32 @@ void main() {
     );
 
     testWidgets(
+      'submits a focused text field when enter is pressed',
+      timeout: _timeout,
+      (WidgetTester tester) async {
+        var submittedText = '';
+        await tester.pumpWidget(
+          MaterialApp(
+            home: Scaffold(
+              body: TextField(
+                autofocus: true,
+                textInputAction: TextInputAction.done,
+                onSubmitted: (value) => submittedText = value,
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+        await tester.enterText(find.byType(TextField), 'TEST-1234567');
+
+        await KeyboardSimulator().pressKey('enter');
+        await tester.pump();
+
+        expect(submittedText, 'TEST-1234567');
+      },
+    );
+
+    testWidgets(
       'delivers a character for an unmodified printable key',
       timeout: _timeout,
       (WidgetTester tester) async {
