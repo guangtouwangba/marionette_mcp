@@ -61,9 +61,9 @@ class InstanceRegistry {
 
   /// Characters that are safe to use verbatim in a filename on every
   /// platform, including Windows (which additionally forbids
-  /// `< > : " | ? *`). This is intentionally the same set the old, stricter
-  /// [validateName] pattern allowed, so names that were already valid
-  /// (and their on-disk `.json` files) are unaffected.
+  /// `< > : " | ? *`). Names made up only of these characters — the old,
+  /// stricter [validateName] pattern plus `.` — encode to themselves, so
+  /// existing on-disk `.json` files are unaffected.
   static final _fileNameSafeCharsPattern = RegExp(r'[a-zA-Z0-9_.-]');
 
   static const _windowsReservedBaseNames = {
@@ -108,7 +108,7 @@ class InstanceRegistry {
   /// platform. Any character outside of [_fileNameSafeCharsPattern] is
   /// percent-encoded, and a leading character is percent-encoded too if the
   /// name would otherwise collide with a Windows-reserved device name (e.g.
-  /// `NUL`) or end in a dot, which Windows also forbids.
+  /// `NUL`).
   static String _encodeFileNameComponent(String name) {
     final buffer = StringBuffer();
     for (final rune in name.runes) {
@@ -128,9 +128,6 @@ class InstanceRegistry {
     final base = encoded.split('.').first.toUpperCase();
     if (_windowsReservedBaseNames.contains(base)) {
       encoded = _percentEncodeCharAt(encoded, 0);
-    }
-    if (encoded.endsWith('.')) {
-      encoded = _percentEncodeCharAt(encoded, encoded.length - 1);
     }
 
     return encoded;

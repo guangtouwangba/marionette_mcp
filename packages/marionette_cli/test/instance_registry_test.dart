@@ -139,10 +139,13 @@ void main() {
       }
     });
 
-    test('does not create a file name ending in a dot', () async {
+    test('a name ending in a dot round-trips via the .json suffix', () async {
+      // The on-disk file is "trailing..json" — a harmless double dot, since
+      // the appended ".json" suffix means the actual file name never ends
+      // in a dot regardless of what the encoded name looks like.
       await registry.register('trailing.', 'ws://127.0.0.1:8181/ws');
 
-      expect(fileNames(), isNot(contains('trailing..json')));
+      expect(fileNames(), equals(['trailing..json']));
       expect(registry.get('trailing.')?.name, equals('trailing.'));
     });
   });
