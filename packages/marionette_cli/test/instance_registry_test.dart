@@ -79,6 +79,33 @@ void main() {
         );
       }
     });
+
+    test('accepts a name whose encoded file name is exactly at the limit',
+        () {
+      final name = 'a' * 250; // + '.json' (5 chars) = 255
+      expect(() => InstanceRegistry.validateName(name), returnsNormally);
+    });
+
+    test('rejects a name whose raw length alone exceeds the limit', () {
+      final name = 'a' * 251; // + '.json' (5 chars) = 256
+      expect(
+        () => InstanceRegistry.validateName(name),
+        throwsA(isA<FormatException>()),
+      );
+    });
+
+    test(
+        'rejects a short name that percent-encoding inflates past the limit',
+        () {
+      // Each '😀' is a 4-byte UTF-8 character encoding to 12 chars
+      // (`%XX%XX%XX%XX`); 22 of them alone exceed 255 chars once encoded,
+      // even though the raw name is only 44 UTF-16 code units long.
+      final name = '😀' * 22;
+      expect(
+        () => InstanceRegistry.validateName(name),
+        throwsA(isA<FormatException>()),
+      );
+    });
   });
 
   group('InstanceRegistry file name encoding', () {

@@ -72,6 +72,15 @@ class InstanceRegistry {
     'LPT1', 'LPT2', 'LPT3', 'LPT4', 'LPT5', 'LPT6', 'LPT7', 'LPT8', 'LPT9',
   };
 
+  /// Most filesystems (ext4, APFS, NTFS) cap a single path component at 255
+  /// bytes. [_encodeFileNameComponent] percent-encodes every byte outside
+  /// [_fileNameSafeCharsPattern], so a name can end up far longer once
+  /// encoded than it was as typed (one 4-byte UTF-8 character becomes
+  /// `%XX%XX%XX%XX`, 12 bytes) — checking only the raw [name] length would
+  /// still let a short, exotic name blow past the limit and crash
+  /// `register` with an uncaught `FileSystemException`.
+  static const _maxFileNameLength = 255;
+
   /// Validates that [name] is a safe instance name.
   static void validateName(String name) {
     if (name.isEmpty || _unsafeCharsPattern.hasMatch(name)) {
@@ -79,6 +88,16 @@ class InstanceRegistry {
         'Invalid instance name "$name". '
         'Names must not be empty and must not contain "/", "\\", or control '
         'characters.',
+      );
+    }
+
+    final fileName = '${_encodeFileNameComponent(name)}.json';
+    if (fileName.length > _maxFileNameLength) {
+      throw FormatException(
+        'Invalid instance name "$name". '
+        'Its encoded file name is ${fileName.length} characters, exceeding '
+        'the $_maxFileNameLength character limit most filesystems enforce '
+        'for a single file name.',
       );
     }
   }
