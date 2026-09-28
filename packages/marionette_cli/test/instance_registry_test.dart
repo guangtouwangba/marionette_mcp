@@ -131,10 +131,12 @@ void main() {
 
     test('does not create a file matching a Windows-reserved device name',
         () async {
-      await registry.register('NUL', 'ws://127.0.0.1:8181/ws');
+      for (final name in ['NUL', 'COM0', 'LPT0', 'COM1', 'LPT9']) {
+        await registry.register(name, 'ws://127.0.0.1:8181/ws');
 
-      expect(fileNames(), isNot(contains('NUL.json')));
-      expect(registry.get('NUL')?.name, equals('NUL'));
+        expect(fileNames(), isNot(contains('$name.json')));
+        expect(registry.get(name)?.name, equals(name));
+      }
     });
 
     test('does not create a file name ending in a dot', () async {
